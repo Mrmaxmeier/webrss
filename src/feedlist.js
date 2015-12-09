@@ -7,8 +7,8 @@ import {
 	ListItem
 } from 'material-ui/lib/lists'
 import { Avatar } from 'material-ui'
-import { UnreadAvatar } from './postlist'
-import { anyUnread } from './storage'
+import { UnreadAvatar } from './UnreadAvatar'
+import { anyUnread } from './storage.js'
 
 class FeedListItem extends React.Component {
 	render() {
@@ -18,7 +18,7 @@ class FeedListItem extends React.Component {
 		return <ListItem onTouchTap={() => {this.props.onTouchTap(this.props.index)}}
 				value={this.props.index+1} primaryText={feed.name} leftAvatar={avatar}
 				style={style} secondaryText={feed.url}
-				rightAvatar={this.props.newContent ? UnreadAvatar : null} />
+				rightAvatar={this.props.newContent ? <UnreadAvatar /> : null} />
 	}
 }
 

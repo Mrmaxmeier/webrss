@@ -4,9 +4,9 @@ const React = require('react')
 const _ = require('underscore')
 window.underscore = _
 
-import { getFeeds, getPosts, isInited, registerCallback } from './storage'
-import { FeedList } from './feedlist'
-import { PostList } from './postlist'
+import { getFeeds, getPosts, isInited, registerCallback } from './storage.js'
+import { FeedList } from './feedlist.js'
+import { PostList } from './postlist.js'
 import { Paper } from 'material-ui'
 
 export class App extends React.Component {

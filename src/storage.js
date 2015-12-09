@@ -21,7 +21,20 @@ export let setRead = post => {
 	data.push(post.id)
 	localStorage.setItem('read/' + post.feed.id, JSON.stringify(data))
 }
-export let anyUnread = feed => _.filter(getPosts(feed), isRead).length != getPosts(feed).length
+export let isNotified = post => _.contains(JSON.parse(localStorage.getItem('notified')), post.id)
+export let setNotified = post => {
+	if (isNotified(post))
+		return
+	let data = JSON.parse(localStorage.getItem('notified')) || []
+	data.push(post.id)
+	localStorage.setItem('notified', JSON.stringify(data))
+}
+export let anyUnread = feed => {
+	let posts = getPosts(feed)
+	if (!posts)
+		return false
+	return _.filter(posts, isRead).length != posts.length
+}
 export let isInited = () => localStorage.getItem('version') == VERSION
 export let chkInit = () => {
 	if (!isInited())
@@ -33,6 +46,7 @@ export let registerCallback = cb => updateCallback = cb
 export function init() {
 	console.info('Initing localStorage...')
 	localStorage.clear()
+	localStorage.setItem('feeds', [])
 	localStorage.setItem('feeds', JSON.stringify(defaultFeeds))
 	localStorage.setItem('version', VERSION)
 	updateCallback()
@@ -40,7 +54,7 @@ export function init() {
 
 function notify(feed) {
 	let f = getPosts(feed)
-	console.log(f)
+	console.log('unread posts:', f)
 }
 
 function parseRSS(feed, data) {

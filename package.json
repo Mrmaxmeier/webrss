@@ -4,29 +4,40 @@
   "description": "",
   "main": "index.jsx",
   "scripts": {
-    "test": "webpack -p",
-    "dev": "webpack-dev-server --progress --colors --watch --hot --inline --devtool source-map"
+    "clean": "rimraf dist",
+    "build:webpack": "NODE_ENV=production webpack --progress --colors --config webpack.config.prod.js",
+    "build": "npm run clean && npm run build:webpack",
+    "start": "node devServer.js",
+    "lint": "eslint src"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "babel": "^6.3.13",
-    "babel-core": "^6.3.15",
-    "babel-loader": "^6.2.0",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-react": "^6.3.13",
     "jquery": "^2.1.4",
     "material-ui": "^0.14.0-rc1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-tap-event-plugin": "^0.2.1",
-    "underscore": "^1.8.3",
-    "webpack": "^1.12.9"
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "babel-plugin-react-transform": "^1.1.1",
+    "babel": "^6.3.13",
+    "babel-core": "^6.3.15",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-eslint": "^5.0.0-beta6",
+    "babel-loader": "^6.2.0",
+    "babel-plugin-react-transform": "beta",
+    "eslint": "^1.10.3",
+    "eslint-plugin-babel": "^3.0.0",
+    "eslint-plugin-react": "^3.11.3",
+    "express": "^4.13.3",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.1",
-    "webpack-dev-server": "^1.14.0"
+    "redbox-react": "^1.2.0",
+    "rimraf": "^2.4.4",
+    "webpack": "^1.12.9",
+    "webpack-dev-middleware": "^1.4.0",
+    "webpack-hot-middleware": "^2.6.0"
   }
 }
