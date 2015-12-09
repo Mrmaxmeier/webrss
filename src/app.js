@@ -4,7 +4,7 @@ const React = require('react')
 const _ = require('underscore')
 window.underscore = _
 
-import { getFeeds, getPosts, isInited, registerCallback } from './storage.js'
+import { getFeeds, getPosts, isInited, registerCallback, registerShowPost } from './storage.js'
 import { Paper } from 'material-ui'
 import { FeedList } from './feedlist.js'
 import { PostList } from './postlist.js'
@@ -24,6 +24,12 @@ export class App extends React.Component {
 			this.setState({ feeds: getFeeds() })
 			if (this.state.selectedFeed)
 				this.setState({ posts: getPosts(this.state.selectedFeed) })
+		})
+		registerShowPost(post => {
+			this.setState({
+				selectedFeed: post.feed,
+				selectedPost: post
+			})
 		})
 	}
 	render() {

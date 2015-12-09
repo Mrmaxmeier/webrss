@@ -5,11 +5,12 @@ const _ = require('underscore')
 const CORS_PROXY = 'https://crossorigin.me'
 const localStorage = window.localStorage
 
-const VERSION = '0.42'
+const VERSION = '0.42' // TODO commit hash
 
 import { defaultFeeds } from './defaultFeeds'
 
 var updateCallback = () => console.log('callback not registered')
+var showPostCallback = () => console.log('callback not registered')
 
 export let getFeeds = () => JSON.parse(localStorage.getItem('feeds'))
 export let getPosts = feed => JSON.parse(localStorage.getItem('feed/'+feed.id))
@@ -36,12 +37,13 @@ export let anyUnread = feed => {
 		return false
 	return _.filter(posts, isRead).length != posts.length
 }
-export let isInited = () => localStorage.getItem('version') == VERSION
+export let isInited = () => localStorage.getItem('version') == VERSION // TODO
 export let chkInit = () => {
 	if (!isInited())
 		init()
 }
 export let registerCallback = cb => updateCallback = cb
+export let registerShowPost = cb => showPostCallback = cb
 
 
 export function init() {
@@ -55,11 +57,31 @@ export function init() {
 
 function notify(feed) {
 	let f = getPosts(feed)
-	console.log('unread posts:', f)
+	f.forEach(post => {
+		if (!isNotified(post)) {
+			Notification.requestPermission(status => {
+				if (status == 'granted') {
+					var notification = new Notification(post.feed.name, {
+						icon: post.feed.img,
+						body: post.title
+					})
+					console.log(notification)
+					notification.onclick = () => {
+						console.log(post.title)
+						showPostCallback(post)
+						notification.close()
+					}
+				} else {
+					alert('requestPermission failed')
+				}
+				setNotified(post)
+			})
+		}
+	})
 }
 
 function parseRSS(feed, data) {
-	window.data = data
+	window.data = data // TODO
 	var parsed = []
 	let rss_version = data.find('rss').attr('version')
 	console.log('rss_version', feed.id, rss_version)
@@ -76,7 +98,7 @@ function parseRSS(feed, data) {
 				id: id || title,
 				feed
 			})
-			window.el = el
+			window.el = el // TODO
 		})
 		return parsed
 	}
@@ -94,7 +116,7 @@ function parseRSS(feed, data) {
 				id: id || title,
 				feed
 			})
-			window.el = el
+			window.el = el // TODO
 		})
 		return parsed
 	}

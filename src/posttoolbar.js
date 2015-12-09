@@ -7,7 +7,7 @@ const ToolbarTitle = require('material-ui/lib/toolbar/toolbar-title')
 const RaisedButton = require('material-ui/lib/raised-button')
 
 import { isRead, setRead } from './storage'
-import { Avatar, FontIcon, IconButton } from 'material-ui'
+import { FontIcon, IconButton } from 'material-ui'
 import DropDownMenu from 'material-ui/lib/drop-down-menu'
 
 export class PostToolbar extends React.Component {
