@@ -7,7 +7,7 @@ import {
 	ListItem
 } from 'material-ui/lib/lists'
 import { Avatar } from 'material-ui'
-import { UnreadAvatar } from './UnreadAvatar'
+import { UnreadAvatar } from './unreadavatar'
 import { anyUnread } from './storage.js'
 
 class FeedListItem extends React.Component {

@@ -6,8 +6,8 @@ import {
 	ListDivider,
 	ListItem
 } from 'material-ui/lib/lists'
-import { isRead, setRead } from './storage'
-import { UnreadAvatar } from './UnreadAvatar'
+import { isRead } from './storage'
+import { UnreadAvatar } from './unreadavatar'
 
 
 class PostListItem extends React.Component {
@@ -21,8 +21,10 @@ class PostListItem extends React.Component {
 			style['backgroundColor'] = 'rgba(0,0,0,0.2)'
 		let unread = !isRead(this.props.post)
 		let description = unread ? this.props.post.description : null
-		if (unread)
-			style['lineHeight'] = '14px'
+		if (unread) {
+			style['fontSize'] = '14px'
+			style['lineHeight'] = '16px'
+		}
 		return <ListItem onTouchTap={() => {this.props.onTouchTap(this.props.index)}}
 				value={this.props.index+1} primaryText={post.title} style={style}
 				rightAvatar={unread ? <UnreadAvatar /> : null} secondaryText={description} />

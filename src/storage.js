@@ -20,6 +20,7 @@ export let setRead = post => {
 	let data = JSON.parse(localStorage.getItem('read/' + post.feed.id)) || []
 	data.push(post.id)
 	localStorage.setItem('read/' + post.feed.id, JSON.stringify(data))
+	updateCallback()
 }
 export let isNotified = post => _.contains(JSON.parse(localStorage.getItem('notified')), post.id)
 export let setNotified = post => {
@@ -66,12 +67,12 @@ function parseRSS(feed, data) {
 		$(data).find('item').each(function () {
 			var el = $(this)
 			let id = el.find('id').text()
-			let link = el.find('link').text()
+			let url = el.find('link').text()
 			let title = el.find('title').text()
 			let author = el.find('author').text()
 			let description = el.find('description').text()
 			parsed.push({
-				link, title, author, description,
+				url, title, author, description,
 				id: id || title,
 				feed
 			})
@@ -84,12 +85,12 @@ function parseRSS(feed, data) {
 		$(data).find('entry').each(function () {
 			var el = $(this)
 			let id = el.find('id').text()
-			let link = el.find('link').text()
+			let url = el.find('link').attr('href')
 			let title = el.find('title').text()
 			let author = el.find('author').text()
 			let description = el.find('description').text()
 			parsed.push({
-				link, title, author, description,
+				url, title, author, description,
 				id: id || title,
 				feed
 			})
